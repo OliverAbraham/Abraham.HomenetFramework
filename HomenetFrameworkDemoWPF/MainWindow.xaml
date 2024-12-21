@@ -1,0 +1,16 @@
+﻿<Window x:Class="HomenetFrameworkDemoWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HomenetFrameworkDemoWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="159" Width="318" Background="WhiteSmoke" FontSize="24"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
+    <Grid>
+        <Label Name="MyLabel" Content="dfgdsfjgihdsklfghld" Margin="16,10,10,0" Height="41" VerticalAlignment="Top"/>
+        <Button Content="On"  HorizontalAlignment="Left" Margin="70,78,0,0"  VerticalAlignment="Top" Click="ButtonOn_Click"/>
+        <Button Content="Off" HorizontalAlignment="Left" Margin="151,78,0,0" VerticalAlignment="Top" Click="ButtonOff_Click"/>
+    </Grid>
+</Window>

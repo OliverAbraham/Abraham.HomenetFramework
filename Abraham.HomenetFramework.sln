@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Solution items", "3 Solut
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomenetFrameworkDemoWPF", "HomenetFrameworkDemoWPF\HomenetFrameworkDemoWPF.csproj", "{23B74048-3178-424F-98E5-55E5F7E309F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{09F76C1F-E067-489C-BF19-72562E625A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09F76C1F-E067-489C-BF19-72562E625A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09F76C1F-E067-489C-BF19-72562E625A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B74048-3178-424F-98E5-55E5F7E309F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B74048-3178-424F-98E5-55E5F7E309F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B74048-3178-424F-98E5-55E5F7E309F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B74048-3178-424F-98E5-55E5F7E309F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{05DD59B3-EF07-4267-9284-DEB8A93794B2} = {E41980BF-C4EB-432D-A5C5-D67AF4ECCDA4}
 		{09F76C1F-E067-489C-BF19-72562E625A4E} = {D8B13162-4E74-4F64-AE9B-D60798B3B5B6}
+		{23B74048-3178-424F-98E5-55E5F7E309F7} = {D8B13162-4E74-4F64-AE9B-D60798B3B5B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EBD8C033-CC93-4672-9CAF-F9B1288629D3}

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "HomenetFrameworkDemo": {
+    "HomenetFrameworkDemoWPF": {
       "commandName": "Project",
       "commandLineArgs": "--config=C:\\Credentials\\HomenetFrameworkDemo\\appsettings.json\r\n"
     }

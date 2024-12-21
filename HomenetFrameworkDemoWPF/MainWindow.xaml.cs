@@ -1,42 +1,12 @@
-﻿using Abraham.HomenetFramework;
+﻿using System.Windows;
+using Abraham.HomenetFramework;
 using Abraham.ProgramSettingsManager;
 using CommandLine;
 using NLog;
 
-namespace HomenetFrameworkDemo;
+namespace HomenetFrameworkDemoWPF;
 
-/// <summary>
-/// PROGRAM TITLE
-/// Demo for Abraham.HomenetFramework nuget package.
-///
-/// FUNCTION
-/// The nuget package contains a collection of functions that I typically need for worker applications.
-///   - Command line options parser
-///   - Configuration file reader
-///   - State file reader/writer
-///   - Scheduler for background tasks
-///   - NLog logger
-///   - MQTT client
-///   - Client for my personal home automation server
-/// 
-/// AUTHOR
-/// Written by Oliver Abraham, mail@oliver-abraham.de
-/// 
-/// 
-/// INSTALLATION AND CONFIGURATION
-/// See README.md in the project root folder.
-/// 
-/// 
-/// LICENSE
-/// This project is licensed under Apache license.
-/// 
-/// 
-/// SOURCE CODE
-/// The source code is hosted at: https://github.com/OliverAbraham/Abraham.HomenetFramework
-/// The Nuget Package is hosted at: https://www.nuget.org/packages/Abraham.HomenetFramework
-/// 
-/// </summary>
-internal class Program
+public partial class MainWindow : Window
 {
     private const string VERSION = "2024-12-20";
 
@@ -124,24 +94,25 @@ internal class Program
 
 
     #region ------------- Init --------------------------------------------------------------------
-    public static void Main(string[] args)
+    public MainWindow()
+    {
+       InitializeComponent();
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         F.ParseCommandLineArguments();
         F.ReadConfiguration(F.CommandLineArguments.ConfigurationFile);
         F.ValidateConfiguration();
         F.InitLogger(F.CommandLineArguments.NlogConfigurationFile);
         F.InitHomeAutomationServerConnection(F.Config.HomeAutomationServerConfig, F.Config.MqttBrokerConfig);
-        PrintGreeting();
         HealthChecks();
         F.ReadStateFile(F.CommandLineArguments.StateFile);
         F.StartBackgroundWorker(MyBackgroundWorker, F.Config.IntervalInSeconds);
+    }
 
-
-        DomainLogic();
-
-        
-        F.Logger.Debug($"Press any key to end the application.");
-        Console.ReadKey();
+    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    {
         F.StopBackgroundJob();
         F.SaveStateFile(F.CommandLineArguments.StateFile);
     }
@@ -150,11 +121,14 @@ internal class Program
 
 
     #region ------------- Domain logic ------------------------------------------------------------
-    private static void DomainLogic()
+    private void ButtonOn_Click(object sender, RoutedEventArgs e)
     {
-        F.Logger.Debug("DomainLogic Demo. Press any key to send a data object change to home automation server.");
-        Console.ReadKey(true);
-        F.SendDataobjectChangeToHomeAutomationServer("MY_DATAOBJECT", F.State.MyProgramState.ToString());
+        F.SendDataobjectChangeToHomeAutomationServer("AZ_DECKENLAMPE", "1");
+    }
+
+    private void ButtonOff_Click(object sender, RoutedEventArgs e)
+    {
+        F.SendDataobjectChangeToHomeAutomationServer("AZ_DECKENLAMPE", "0");
     }
     #endregion
 
@@ -169,43 +143,19 @@ internal class Program
 
 
     #region ------------- Background worker -------------------------------------------------------
-    private static void MyBackgroundWorker()
+    private void MyBackgroundWorker()
     {
         try
         {
-            F.Logger.Debug($"PeriodicJob {++F.State.MyProgramState}");
+            Dispatcher.Invoke( () =>
+            {
+                MyLabel.Content = (++F.State.MyProgramState).ToString();
+            });
         }
         catch (Exception ex) 
         {
             F.Logger.Error(ex);
         }
-    }
-    #endregion
-
-
-
-    #region ------------- Logging -----------------------------------------------------------------
-    private static void PrintGreeting()
-    {
-        // To generate text like this, use https://onlineasciitools.com/convert-text-to-ascii-art
-        F.Logger.Debug("");
-        F.Logger.Debug("");
-        F.Logger.Debug("");
-        F.Logger.Debug(@"-------------------------------------------------------------------------------------------");
-        F.Logger.Debug(@"    ______                                           _       ______                        ");
-        F.Logger.Debug(@"    |  ___|                                         | |      |  _  \                       ");
-        F.Logger.Debug(@"    | |_ _ __ __ _ _ __ ___   _____      _____  _ __| | __   | | | |___ _ __ ___   ___     ");
-        F.Logger.Debug(@"    |  _| '__/ _` | '_ ` _ \ / _ \ \ /\ / / _ \| '__| |/ /   | | | / _ \ '_ ` _ \ / _ \    ");
-        F.Logger.Debug(@"    | | | | | (_| | | | | | |  __/\ V  V / (_) | |  |   <    | |/ /  __/ | | | | | (_) |   ");
-        F.Logger.Debug(@"    \_| |_|  \__,_|_| |_| |_|\___| \_/\_/ \___/|_|  |_|\_\   |___/ \___|_| |_| |_|\___/    ");
-        F.Logger.Debug(@"                                                                                           ");
-        F.Logger.Info ($"                   Program started, Version {VERSION}                                      ");
-        F.Logger.Debug(@"-------------------------------------------------------------------------------------------");
-        F.Logger.Debug($"");
-        F.Logger.Debug($"Configuration loaded from file    : {F.ProgramSettingsManager.ConfigPathAndFilename}");
-        F.Config.LogOptions(F.Logger);
-        F.LogHomeAutomationConfig();
-        F.Logger.Debug($"");
     }
     #endregion
 }
