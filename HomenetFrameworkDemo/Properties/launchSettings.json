@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HomenetFrameworkDemo": {
+      "commandName": "Project",
+      "commandLineArgs": "--config=C:\\Credentials\\HomenetFrameworkDemo\\appsettings.json"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34321.82
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abraham.HomenetFramework", "Abraham.HomenetFramework\Abraham.HomenetFramework.csproj", "{05DD59B3-EF07-4267-9284-DEB8A93794B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomenetFrameworkDemo", "HomenetFrameworkDemo\HomenetFrameworkDemo.csproj", "{09F76C1F-E067-489C-BF19-72562E625A4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 Nuget Package", "1 Nuget Package", "{E41980BF-C4EB-432D-A5C5-D67AF4ECCDA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 Demo", "2 Demo", "{D8B13162-4E74-4F64-AE9B-D60798B3B5B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Solution items", "3 Solution items", "{1DD1DEDB-612B-4391-8CD3-6623D2EF4545}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05DD59B3-EF07-4267-9284-DEB8A93794B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DD59B3-EF07-4267-9284-DEB8A93794B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05DD59B3-EF07-4267-9284-DEB8A93794B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05DD59B3-EF07-4267-9284-DEB8A93794B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F76C1F-E067-489C-BF19-72562E625A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F76C1F-E067-489C-BF19-72562E625A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F76C1F-E067-489C-BF19-72562E625A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F76C1F-E067-489C-BF19-72562E625A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{05DD59B3-EF07-4267-9284-DEB8A93794B2} = {E41980BF-C4EB-432D-A5C5-D67AF4ECCDA4}
+		{09F76C1F-E067-489C-BF19-72562E625A4E} = {D8B13162-4E74-4F64-AE9B-D60798B3B5B6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EBD8C033-CC93-4672-9CAF-F9B1288629D3}
+	EndGlobalSection
+EndGlobal
