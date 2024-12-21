@@ -7,13 +7,17 @@ namespace HomenetFrameworkDemo;
 
 /// <summary>
 /// PROGRAM TITLE
-/// 
+/// Demo for Abraham.HomenetFramework nuget package.
 ///
-/// EXAMPLES
-/// 
-/// 
 /// FUNCTION
-///     
+/// The nuget package contains a collection of functions that I typically need for worker applications.
+///   - Command line options parser
+///   - Configuration file reader
+///   - State file reader/writer
+///   - Scheduler for background tasks
+///   - NLog logger
+///   - MQTT client
+///   - Client for my personal home automation server
 /// 
 /// AUTHOR
 /// Written by Oliver Abraham, mail@oliver-abraham.de
@@ -24,11 +28,12 @@ namespace HomenetFrameworkDemo;
 /// 
 /// 
 /// LICENSE
-/// This project is licensed under 
+/// This project is licensed under Apache license.
 /// 
 /// 
 /// SOURCE CODE
-/// 
+/// The source code is hosted at: https://github.com/OliverAbraham/Abraham.HomenetFramework
+/// The Nuget Package is hosted at: https://www.nuget.org/packages/Abraham.HomenetFramework
 /// 
 /// </summary>
 internal class Program
@@ -42,6 +47,10 @@ internal class Program
 
 
     #region ------------- Command line arguments --------------------------------------------------
+    /// <summary>
+    /// Definition of all command line arguments. For detailed info how to use this, refer to 
+    /// https://github.com/commandlineparser/commandline
+    /// </summary>
     class CommandLineArguments
 	{
 	    [Option('c', "config", Default = "appsettings.json", Required = false, HelpText = 
@@ -78,6 +87,10 @@ internal class Program
 
 
     #region ------------- Configuration file (appsettings.json) -----------------------------------
+    /// <summary>
+    /// Contains all properties of the appsettings.json file where you store your configuration data.
+    /// When starting the application, you can set the file location with the "--config" argument.
+    /// </summary>
     public class Configuration
     {
         [Optional]
@@ -98,6 +111,10 @@ internal class Program
 
 
     #region ------------- State file --------------------------------------------------------------
+    /// <summary>
+    /// Stores a set of dynamic data. Contents is read a application start and saved when ending.
+    /// Add your properties here.
+    /// </summary>
     public class StateFile
     {
         public int MyProgramState { get; set; }
@@ -117,7 +134,7 @@ internal class Program
         PrintGreeting();
         HealthChecks();
         F.ReadStateFile(F.CommandLineArguments.StateFile);
-        F.StartBackgroundJob(PeriodicJob, F.Config.IntervalInSeconds);
+        F.StartBackgroundWorker(MyBackgroundWorker, F.Config.IntervalInSeconds);
 
 
         DomainLogic();
@@ -152,7 +169,7 @@ internal class Program
 
 
     #region ------------- Background worker -------------------------------------------------------
-    private static void PeriodicJob()
+    private static void MyBackgroundWorker()
     {
         try
         {

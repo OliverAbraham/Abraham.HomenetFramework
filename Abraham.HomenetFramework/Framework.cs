@@ -40,7 +40,6 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
 
 
 
-    #region ------------- Methods -----------------------------------------------------------------
     #region ------------- Command line arguments --------------------------------------------------
     public void Init()
     {
@@ -164,7 +163,7 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
     #endregion
 
     #region ------------- Periodic actions --------------------------------------------------------
-    public void StartBackgroundJob(Action periodicJob, int intervalInSeconds)
+    public void StartBackgroundWorker(Action periodicJob, int intervalInSeconds)
     {
         Scheduler = new Abraham.Scheduler.Scheduler()
             .UseAction(periodicJob)
@@ -339,7 +338,6 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
         else
             Logger.Error($"MQTT topic update error! {result.ReasonString}");
     }
-    #endregion
     #endregion
     #endregion
 }
