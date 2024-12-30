@@ -60,6 +60,8 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
 	}
     #endregion
 
+
+
     #region ------------- Configuration -----------------------------------------------------------
     public void ReadConfiguration(string configurationFile)
     {
@@ -85,6 +87,8 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
         ProgramSettingsManager.Save(Config);
     }
     #endregion
+
+
 
     #region ------------- State file --------------------------------------------------------------
 	public void ReadStateFile(string filename)
@@ -132,6 +136,8 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
     }
     #endregion
 
+
+
     #region ------------- Logging -----------------------------------------------------------------
     public void InitLogger(string nlogConfigurationFile)
     {
@@ -162,12 +168,14 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
     }
     #endregion
 
+
+
     #region ------------- Periodic actions --------------------------------------------------------
-    public void StartBackgroundWorker(Action periodicJob, int intervalInSeconds)
+    public void StartBackgroundWorker(Action periodicJob, int intervalInSeconds, int firstIntervalInSeconds = 1)
     {
         Scheduler = new Abraham.Scheduler.Scheduler()
             .UseAction(periodicJob)
-            .UseFirstInterval(TimeSpan.FromSeconds(intervalInSeconds))
+            .UseFirstInterval(TimeSpan.FromSeconds(firstIntervalInSeconds))
             .UseIntervalSeconds(intervalInSeconds)
             .Start();
     }
@@ -177,6 +185,8 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
         Scheduler?.Stop();
     }
     #endregion
+
+
 
     #region ------------- Home Automation Server communication ------------------------------------
     #region Init
