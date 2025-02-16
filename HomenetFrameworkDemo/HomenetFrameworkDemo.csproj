@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abraham.HomenetFramework" Version="1.0.0" />
+    <ProjectReference Include="..\Abraham.HomenetFramework\Abraham.HomenetFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
