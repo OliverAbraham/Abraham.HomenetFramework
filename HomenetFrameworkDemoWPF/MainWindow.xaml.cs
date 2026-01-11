@@ -8,7 +8,7 @@ namespace HomenetFrameworkDemoWPF;
 
 public partial class MainWindow : Window
 {
-    private const string VERSION = "2024-12-20";
+    private const string VERSION = "2026-01-11";
 
     #region ------------- Fields ------------------------------------------------------------------
     private static Framework<CommandLineArguments,Configuration,StateFile> F = new();

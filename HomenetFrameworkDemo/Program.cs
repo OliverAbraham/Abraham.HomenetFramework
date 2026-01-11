@@ -38,7 +38,7 @@ namespace HomenetFrameworkDemo;
 /// </summary>
 internal class Program
 {
-    private const string VERSION = "2024-12-30";
+    private const string VERSION = "2026-01-11";
 
     #region ------------- Fields ------------------------------------------------------------------
     private static Framework<CommandLineArguments,Configuration,StateFile> F = new();
