@@ -1,6 +1,4 @@
-﻿using Abraham.HomenetBase.Connectors;
-using Abraham.HomenetBase.Models;
-using Abraham.ProgramSettingsManager;
+﻿using Abraham.ProgramSettingsManager;
 using CommandLine;
 using Newtonsoft.Json;
 using NLog.Web;
@@ -20,10 +18,7 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
     public STATE                            State                        { get; set; }
     public NLog.Logger                      Logger                       { get; set; }
     public Abraham.Scheduler.Scheduler?     Scheduler                    { get; set; }
-                                                                         
-    public DataObjectsConnector             HomenetClient                { get; set; }
     public Abraham.MQTTClient.MQTTClient    MqttClient                   { get; set; }
-    public HomeAutomationServerConfig       HomenetConfig                { get; set; }
     public MqttBrokerConfig                 MqttBrokerConfig             { get; set; }
     #endregion
 
@@ -156,11 +151,6 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
 
     public void LogHomeAutomationConfig()
     {
-        if (HomenetServerIsConfigured())
-            Logger.Debug($"Home Automation target            : {HomenetConfig.Url} / {HomenetConfig.User} / ***************");
-        else                                                 
-            Logger.Debug($"Home Automation target            : Not configured");
-                                                             
         if (MqttBrokerIsConfigured())                        
             Logger.Debug($"MQTT broker target                : {MqttBrokerConfig.Url} / {MqttBrokerConfig.User} / ***************");
         else                                                 
@@ -190,13 +180,8 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
 
     #region ------------- Home Automation Server communication ------------------------------------
     #region Init
-    public void InitHomeAutomationServerConnection(HomeAutomationServerConfig homeAutomationServerConfig, MqttBrokerConfig mqttBrokerConfig)
+    public void InitHomeAutomationServerConnection(MqttBrokerConfig mqttBrokerConfig)
     {
-        HomenetConfig = homeAutomationServerConfig;
-
-        if (HomenetServerIsConfigured())
-            ConnectToHomenetServer();
-
         MqttBrokerConfig = mqttBrokerConfig;
         
         if (MqttBrokerIsConfigured())
@@ -207,73 +192,7 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
     #region Sending results
     public void SendDataobjectChangeToHomeAutomationServer(string dataObjectName, string value)
     {
-        SendOutToHomenet(value, dataObjectName);
         SendOutToMQTT(value, dataObjectName);
-    }
-    #endregion
-
-    #region Home automation server target
-    public bool HomenetServerIsConfigured()
-    {
-        return HomenetConfig is not null && 
-                !string.IsNullOrWhiteSpace(HomenetConfig.Url) && 
-                !string.IsNullOrWhiteSpace(HomenetConfig.User) && 
-                !string.IsNullOrWhiteSpace(HomenetConfig.Password) &&
-                HomenetConfig.Timeout > 0;
-    }
-
-    public bool ConnectedToHomenetServer()
-    {
-        return HomenetConfig is not null;
-    }
-
-    public bool ConnectToHomenetServer()
-    {
-        Logger.Debug("Connecting to homenet server...");
-        try
-        {
-            HomenetClient = new DataObjectsConnector(HomenetConfig.Url, HomenetConfig.User, HomenetConfig.Password, HomenetConfig.Timeout);
-            Logger.Debug("Connect successful");
-            return true;
-        }
-        catch (Exception ex)
-        {
-            Logger.Error("Error connecting to homenet server:\n" + ex.ToString());
-            return false;
-        }
-    }
-
-    public void SendOutToHomenet(string value, string dataObjectName)
-    {
-        try
-        {
-            if (HomenetServerIsConfigured())
-            {
-                Logger.Debug($"Sending out result to Home automation target");
-                if (!ConnectedToHomenetServer())
-                {
-                    if (!ConnectToHomenetServer())
-                        Logger.Error("Error connecting to homenet server.");
-                }
-                UpdateDataObject(value, dataObjectName);
-            }
-        }
-        catch (Exception ex)
-        {
-            Logger.Error($"SendOutToHomenet: {ex}");
-        }
-    }
-
-    public void UpdateDataObject(string value, string dataObjectName)
-    {
-        if (HomenetClient is null)
-            return;
-
-        bool success = HomenetClient.UpdateValueOnly(new DataObject() { Name = dataObjectName, Value = value});
-        if (success)
-            Logger.Info($"Homeset server topic {dataObjectName} updated with value {value}");
-        else
-            Logger.Error($"server update error! {HomenetClient.LastError}");
     }
     #endregion
 

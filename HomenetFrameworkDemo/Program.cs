@@ -93,8 +93,6 @@ internal class Program
     /// </summary>
     public class Configuration
     {
-        [Optional]
-        public HomeAutomationServerConfig HomeAutomationServerConfig { get; set; }
         
         [Optional]
         public MqttBrokerConfig MqttBrokerConfig { get; set; }
@@ -130,7 +128,7 @@ internal class Program
         F.ReadConfiguration(F.CommandLineArguments.ConfigurationFile);
         F.ValidateConfiguration();
         F.InitLogger(F.CommandLineArguments.NlogConfigurationFile);
-        F.InitHomeAutomationServerConnection(F.Config.HomeAutomationServerConfig, F.Config.MqttBrokerConfig);
+        F.InitHomeAutomationServerConnection(F.Config.MqttBrokerConfig);
         PrintGreeting();
         HealthChecks();
         F.ReadStateFile(F.CommandLineArguments.StateFile);
