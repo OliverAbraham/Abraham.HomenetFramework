@@ -5,15 +5,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Description>Framework for my home automation workers.</Description>
+    <Description>Bundle of MQTT client, Program settings reader, Program state reader/writer, background worker, NLog logger. Useful to build HomeAssistant clients for Linux and Windows (also WPF).</Description>
     <Copyright>Oliver Abraham</Copyright>
     <PackageIcon>Ciridata.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/OliverAbraham/Abraham.HomenetFramework</RepositoryUrl>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>1.0.4</Version>
-    <PackageReleaseNotes>Updated to HomenetNase / Restsharp 1.112.1.0</PackageReleaseNotes>
+    <Version>1.0.5</Version>
+    <PackageReleaseNotes>Updated to MQTT client 1.0.13</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/OliverAbraham/Abraham.HomenetFramework</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
