@@ -1,7 +1,9 @@
 ﻿using Abraham.ProgramSettingsManager;
 using CommandLine;
+using MQTTnet.Client;
 using Newtonsoft.Json;
 using NLog.Web;
+using System.Threading;
 
 namespace Abraham.HomenetFramework;
 
@@ -190,9 +192,9 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
     #endregion
 
     #region Sending results
-    public void SendDataobjectChangeToHomeAutomationServer(string dataObjectName, string value)
+    public void SendDataobjectChangeToHomeAutomationServer(string dataObjectName, string value, bool retain)
     {
-        SendOutToMQTT(value, dataObjectName);
+        SendOutToMQTT(value, dataObjectName, retain);
     }
     #endregion
 
@@ -225,6 +227,9 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
                 .Build();
 
             Logger.Debug("Created MQTT client");
+
+            MqttClient.Connect();
+            Logger.Debug($"Client is connected.");
             return true;
         }
         catch (Exception ex)
@@ -234,7 +239,7 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
         }
     }
 
-    public void SendOutToMQTT(string value, string mqttTopic)
+    public void SendOutToMQTT(string value, string mqttTopic, bool retain)
     {
         try
         {
@@ -247,7 +252,7 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
                     if (!ConnectToMqttBroker())
                         Logger.Error("Error connecting to MQTT broker.");
                 }
-                UpdateTopic(value, mqttTopic);
+                UpdateTopic(value, mqttTopic, retain);
             }
         }
         catch (Exception ex)
@@ -256,14 +261,14 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
         }
     }
 
-    public void UpdateTopic(string value, string topicName)
+    public void UpdateTopic(string value, string topicName, bool retain)
     {
         if (MqttClient is null || value is null)
             return;
 
-        var result = MqttClient.Publish(topicName, value);
+        var result = MqttClient.Publish(topicName, value, useOpenConnection: true, cancellationToken: default, retain: retain);
         if (result.IsSuccess)
-            Logger.Info($"MQTT topic {topicName} updated with value {value}");
+            Logger.Debug($"MQTT topic {topicName} updated with value {value}");
         else
             Logger.Error($"MQTT topic update error! {result.ReasonString}");
     }

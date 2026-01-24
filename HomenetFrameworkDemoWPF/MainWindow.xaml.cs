@@ -120,12 +120,12 @@ public partial class MainWindow : Window
     #region ------------- Domain logic ------------------------------------------------------------
     private void ButtonOn_Click(object sender, RoutedEventArgs e)
     {
-        F.SendDataobjectChangeToHomeAutomationServer("AZ_DECKENLAMPE", "1");
+        F.SendDataobjectChangeToHomeAutomationServer("AZ_DECKENLAMPE", "1", retain:true);
     }
 
     private void ButtonOff_Click(object sender, RoutedEventArgs e)
     {
-        F.SendDataobjectChangeToHomeAutomationServer("AZ_DECKENLAMPE", "0");
+        F.SendDataobjectChangeToHomeAutomationServer("AZ_DECKENLAMPE", "0", retain:true);
     }
     #endregion
 

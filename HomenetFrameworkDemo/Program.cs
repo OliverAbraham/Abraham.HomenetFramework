@@ -152,7 +152,7 @@ internal class Program
     {
         F.Logger.Debug("DomainLogic Demo. Press any key to send a data object change to home automation server.");
         Console.ReadKey(true);
-        F.SendDataobjectChangeToHomeAutomationServer("MY_DATAOBJECT", F.State.MyProgramState.ToString());
+        F.SendDataobjectChangeToHomeAutomationServer("MY_DATAOBJECT", F.State.MyProgramState.ToString(), retain:true);
     }
     #endregion
 
