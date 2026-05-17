@@ -13,7 +13,8 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <IncludeSymbols>True</IncludeSymbols>
     <Version>1.0.7</Version>
-    <PackageReleaseNotes>Added wholeDto/timestamp option for MQTT publishing</PackageReleaseNotes>
+    <PackageReleaseNotes>1. Fixed timestamp MQTT option
+2. Added two methods to replace variables in settings with environment values</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/OliverAbraham/Abraham.HomenetFramework</PackageProjectUrl>
   </PropertyGroup>
 
