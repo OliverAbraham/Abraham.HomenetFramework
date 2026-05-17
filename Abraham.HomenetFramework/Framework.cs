@@ -83,12 +83,39 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
     {
         ProgramSettingsManager.Save(Config);
     }
+
+    public void ReplaceVariablesWithEnvironmentValues(ref string value)
+    {
+        // search for a regular expression like ${ENV_VARIABLE_NAME} and replace it with the value of the environment variable ENV_VARIABLE_NAME
+        value = System.Text.RegularExpressions.Regex.Replace(value, @"\$\{(\w+)\}", match =>
+        {
+            string envVarName = match.Groups[1].Value;
+            string envVarValue = Environment.GetEnvironmentVariable(envVarName);
+            return envVarValue ?? match.Value; // if the environment variable is not found, keep the original value
+        });
+    }
+
+    public void ReplaceVariablesWithEnvironmentValues(SETTINGS settings)
+    {
+        foreach (var property in typeof(SETTINGS).GetProperties())
+        {
+            if (property.PropertyType == typeof(string))
+            {
+                string value = property.GetValue(settings) as string;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    ReplaceVariablesWithEnvironmentValues(ref value);
+                    property.SetValue(settings, value);
+                }
+            }
+        }
+    }
     #endregion
 
 
 
     #region ------------- State file --------------------------------------------------------------
-	public void ReadStateFile(string filename)
+    public void ReadStateFile(string filename)
     {
         try
         {
@@ -202,7 +229,7 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
 		    // so that we can easily detect in Home Assistant when the value was updated for the last time.
             var dto = new MqttEntity(value.ToString(), timestamp?.ToString("o"));
 		    var json = JsonConvert.SerializeObject(dto, Formatting.None);
-            SendOutToMQTT(json, dataObjectName, retain);
+            SendOutToMQTT(json, dataObjectName + "/timestamp", retain);
         }
     }
     #endregion
