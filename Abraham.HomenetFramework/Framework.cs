@@ -192,9 +192,18 @@ public class Framework<CMDLINEARGS,SETTINGS,STATE>
     #endregion
 
     #region Sending results
-    public void SendDataobjectChangeToHomeAutomationServer(string dataObjectName, string value, bool retain)
+    public void SendDataobjectChangeToHomeAutomationServer(string dataObjectName, string value, bool retain, bool wholeDto = false, DateTimeOffset? timestamp = null)
     {
         SendOutToMQTT(value, dataObjectName, retain);
+
+        if (wholeDto && timestamp is not null)
+        {
+            // we're sending a json structure with the value together with the timestamp,
+		    // so that we can easily detect in Home Assistant when the value was updated for the last time.
+            var dto = new MqttEntity(value.ToString(), timestamp?.ToString("o"));
+		    var json = JsonConvert.SerializeObject(dto, Formatting.None);
+            SendOutToMQTT(json, dataObjectName, retain);
+        }
     }
     #endregion
 
